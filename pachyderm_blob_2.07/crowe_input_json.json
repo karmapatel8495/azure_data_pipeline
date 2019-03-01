@@ -1,0 +1,16 @@
+{
+  "pipeline": {
+    "name": "query"
+  },
+  "transform": {
+    "image": "rajatmittal18/crowe_cron:v2.07",
+    "cmd": [ "python" , "crowe_input.py" ]
+
+  },
+  "input": {
+    "cron": {
+      "name": "tick",
+      "spec": "@every 1m"
+    }  
+  }
+}

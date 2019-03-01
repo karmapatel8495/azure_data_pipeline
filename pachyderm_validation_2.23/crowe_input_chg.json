@@ -1,0 +1,19 @@
+{
+  "pipeline": {
+    "name": "chg"
+  },
+  "transform": {
+    "image": "rajatmittal18/chg_validate_image:v2.23",
+    "cmd": [ "python","chg_validate.py" ]
+
+  },
+"job_timeout" : "1m",
+  "input": {
+    "atom": {
+      "repo": "query",
+      "branch": "master",
+      "glob": "/*CHG.csv"
+}
+
+  }
+}
