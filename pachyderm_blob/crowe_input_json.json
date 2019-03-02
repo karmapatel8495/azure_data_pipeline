@@ -4,13 +4,13 @@
   },
   "transform": {
     "image": "dockerrepodemo.azurecr.io",
-    "cmd": [ "python" , "crowe_input.py" ]
+    "cmd": [ "python" , "crowe_input.py" ],
+    "image_pull_secrets": ["acr-auth"]
   },
   "input": {
     "cron": {
       "name": "tick",
       "spec": "@every 1m"
-    },
-    "imagePullSecrets": ["acr-auth"]
+    }
   }
 }
