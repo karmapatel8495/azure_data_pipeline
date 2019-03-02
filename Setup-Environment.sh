@@ -1,4 +1,4 @@
-# Variables needed to start AKS
+#################### Variables ####################
 AZURE_RESOURCE_GROUP="crowe-demo"
 AZURE_LOCATION="eastus"
 AKS_NODE_SIZE="Standard_DS2_v2"
@@ -11,6 +11,7 @@ STORAGE_SIZE=1
 STORAGE_SKU="Standard_LRS"
 ACR_REGISTRY_NAME="dockerrepodemo"
 ACR_SKU="Basic"
+###################################################
 
 # Create Resource Group
 az group create --name=${AZURE_RESOURCE_GROUP} --location=${AZURE_LOCATION}
