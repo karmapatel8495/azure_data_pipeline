@@ -19,8 +19,6 @@ processed_container_name = "processed-container"
 invalid_container_name = "invalid-container"
 generator = block_blob_service.list_blobs(container_name,prefix="2")
 print("Running Crowe Industry Practicum Project")
-#valid_file_path = "processed/valid/"
-#invalid_file_path = "processed/invalid/"
 
 for blob in generator:
 	if blob.name.endswith('.csv'):

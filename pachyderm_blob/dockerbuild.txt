@@ -1,3 +1,0 @@
-docker build -t crowe_cron:v1 .
-docker tag crowe_cron:v1 rajatmittal18/crowe_cron:v1
-docker build rajatmittal18/crowe_cron:v1
