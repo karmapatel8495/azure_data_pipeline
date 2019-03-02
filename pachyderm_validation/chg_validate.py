@@ -2,8 +2,8 @@ import os, uuid, sys
 from azure.storage.blob import BlockBlobService, PublicAccess
 from dateutil.parser import parse
 
-act_name = "pachydermstorage"
-act_key = "92byCglypLFaJ5BG1c0lbS7QRuxdmMvGDCpg0MOFR9rE7nh0VGiiQSr1rvrFP9NIkkp6lIXASQlJlVJKUtREmA=="
+act_name = "crowedemostorage"
+act_key = "WWxjJW+GkKIkklkXEuR6nDalogfrriKUG3Ra03Z3/xiwg5EA3lOVutjqqJbxCBCxd9C8HrtAuV6OC0Nzwz1rbQ=="
 block_blob_service = BlockBlobService(account_name=act_name, account_key=act_key)
 
 container_name = "pachy-container"
