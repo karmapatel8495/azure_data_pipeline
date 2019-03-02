@@ -7,4 +7,4 @@ AKV_NAME=$ACR_REGISTRY_NAME-vault # Azure Key Vault Name
 ###################################################
 
 cd pachyderm_blob/
-az acr build --registry $ACR_REGISTRY_NAME --image crowe_cron:v2 .
+az acr build --registry $ACR_REGISTRY_NAME --image crowe_cron:v3 .
