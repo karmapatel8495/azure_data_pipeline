@@ -3,7 +3,7 @@
     "name": "query"
   },
   "transform": {
-    "image": "dockerrepodemo.azurecr.io",
+    "image": "dockerrepodemo.azurecr.io/crowe_cron:v1",
     "cmd": [ "python" , "crowe_input.py" ],
     "image_pull_secrets": ["acr-auth"]
   },

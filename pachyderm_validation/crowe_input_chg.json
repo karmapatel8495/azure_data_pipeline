@@ -3,17 +3,16 @@
     "name": "chg"
   },
   "transform": {
-    "image": "rajatmittal18/chg_validate_image:v2.23",
-    "cmd": [ "python","chg_validate.py" ]
-
+    "image": "dockerrepodemo.azurecr.io/chg_validate_image:v1",
+    "cmd": [ "python","chg_validate.py" ],
+    "image_pull_secrets": ["acr-auth"]
   },
-"job_timeout" : "1m",
+  "job_timeout" : "1m",
   "input": {
     "atom": {
       "repo": "query",
       "branch": "master",
       "glob": "/*CHG.csv"
-}
-
+    }
   }
 }

@@ -1,3 +1,10 @@
-docker build --no-cache -t crowe_cron:v$1 .
-docker tag crowe_cron:v$1 rajatmittal18/crowe_cron:v$1
-docker push rajatmittal18/crowe_cron:v$1
+#!/bin/bash
+
+#################### Variables ####################
+ACR_NAME='dockerrepodemo'
+RES_GROUP=$ACR_NAME # Resource Group name
+AKV_NAME=$ACR_NAME-vault # Azure Key Vault Name
+###################################################
+
+cd pachyderm_blob/
+az acr build --registry $ACR_NAME --image crowe_cron:v1 .
