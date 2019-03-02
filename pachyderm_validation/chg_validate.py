@@ -13,6 +13,10 @@ validate_failure_container_name="validate-failure"
 generator = block_blob_service.list_blobs(container_name,prefix="2")
 print("Running Crowe Industry Practicum Project")
 
+block_blob_service.create_container(processed_container_name)
+block_blob_service.create_container(validate_success_container_name)
+block_blob_service.create_container(validate_failure_container_name)
+
 def validateEndLines(File_Name):
 	validateStatus = True
 	Open_file = open(path+File_Name,'r').readlines()

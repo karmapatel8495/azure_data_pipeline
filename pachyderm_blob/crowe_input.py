@@ -2,8 +2,8 @@ import os, uuid, sys
 from azure.storage.blob import BlockBlobService, PublicAccess
 from dateutil.parser import parse
 
-act_name = "pachydermstorage"
-act_key = "92byCglypLFaJ5BG1c0lbS7QRuxdmMvGDCpg0MOFR9rE7nh0VGiiQSr1rvrFP9NIkkp6lIXASQlJlVJKUtREmA=="
+act_name = "crowedemostorage"
+act_key = "WWxjJW+GkKIkklkXEuR6nDalogfrriKUG3Ra03Z3/xiwg5EA3lOVutjqqJbxCBCxd9C8HrtAuV6OC0Nzwz1rbQ=="
 block_blob_service = BlockBlobService(account_name=act_name, account_key=act_key)
 
 def validateFileNamingConvention(filename):
@@ -14,11 +14,14 @@ def validateFileNamingConvention(filename):
         return False
 
 # Check the list of blob
-container_name = "pachy-container"
+container_name = "crowe-file"
 processed_container_name = "processed-container"
 invalid_container_name = "invalid-container"
 generator = block_blob_service.list_blobs(container_name,prefix="2")
 print("Running Crowe Industry Practicum Project")
+
+block_blob_service.create_container(processed_container_name)
+block_blob_service.create_container(invalid_container_name)
 
 for blob in generator:
 	if blob.name.endswith('.csv'):
