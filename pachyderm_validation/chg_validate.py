@@ -38,7 +38,7 @@ print("Running Crowe Industry Practicum Project")
 # Function to validate column headers
 
 def validate_title_row(titlerow):
-	columns_names = ["LEVEL_1_CODE", "ACCOUNT NUMBER", "DATE_OF_SERVICE", "POST_DATE", "HCPCS_CPT", "MODIFIER_1", "MODIFIER_2", "MODIFIER_3", "MODIFIER_4", "PROVIDER_RVU", "PLACE_OF_SERVICE", "CARRIER_NUMBER", "LOCALITY_NUMBER", "REVEN"]
+	columns_names = ["LEVEL_1_CODE", "ACCOUNT NUMBER", "DATE_OF_SERVICE", "POST_DATE", "HCPCS_CPT", "MODIFIER_1", "MODIFIER_2", "MODIFIER_3", "MODIFIER_4", "PROVIDER_RVU", "PLACE_OF_SERVICE", "CARRIER_NUMBER", "LOCALITY_NUMBER", "REVENUE_CODE", "REFERING_PROV_NPI", "PERFORMING_PROV_NPI", "BILLING_PROV_NPI", "ATTENDING_PROV_NPI", "DAYS_UNITS", "CHARGE_AMT", "TOTAL_CHARGE_AMT", "CDM_CODE", "CDM_DESC", "DEPT_CODE"]
 	validate_status = True
 	title_list = titlerow.split("|")
 	for column in title_list:
