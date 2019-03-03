@@ -35,58 +35,119 @@ block_blob_service.create_container(validate_failure_container_name)
 generator = block_blob_service.list_blobs(container_name,prefix="2")
 print("Running Crowe Industry Practicum Project")
 
-def validateEndLines(File_Name):
-	validateStatus = True
-	Open_file = open(path+File_Name,'r').readlines()
-	print("File is Opened")
-	if(len(Open_file) > 0):
-		no_of_header_cols = len(Open_file[0].split("|"))
-		for column in Open_file[0].split("|"):
-			if(isinstance(column,str)) == False:
-				validateStatus = False
-				print("Validation #5 failed")
-				print(column,type(column))
-				break
-	for line in Open_file:
-		if os.name == "nt":
+# Function to validate column headers
+
+def validate_title_row(titlerow):
+	columns_names = ["LEVEL_1_CODE", "ACCOUNT NUMBER", "DATE_OF_SERVICE", "POST_DATE", "HCPCS_CPT", "MODIFIER_1", "MODIFIER_2", "MODIFIER_3", "MODIFIER_4", "PROVIDER_RVU", "PLACE_OF_SERVICE", "CARRIER_NUMBER", "LOCALITY_NUMBER", "REVEN"]
+	validate_status = True
+	title_list = titlerow.split("|")
+	for column in title_list:
+		if(isinstance(column,str)) == False:
+			validate_status = False
+			print("Validation #5 failed")
+			print(column,type(column))
+			return validate_status
+	for column_index in range(len(title_list)):
+		if(title_list[column_index] != columns_names[column_index]):
+			validate_status = False
+			print("Validation #5 failed")
+			print(column,type(column))
+			return validate_status
+	return validate_status
+
+# Function to validate end of line (Carriage Return (CR) and Line Feed (LF))
+
+def validate_crlf(csvfile):
+	validate_status = True
+	for line in csvfile:
+		if os.name == "nt": # for nt systems (Windows)
 			if('\r\n' not in line):
-				validateStatus = False
+				validate_status = False
 				print("Validation #2 failed")
-				break
-			else:
-				if('\n' not in line):
-					validateStatus = False
-					print("Validation #2 failed")
-					break
-		if(len(line.split("|")) != no_of_header_cols):
-			validateStatus = False
+				return validate_status
+		else: # for unix systems (macOS, Ubuntu etc)
+			if('\n' not in line):
+				validate_status = False
+				print("Validation #2 failed")
+				return validate_status
+	return validate_status
+
+# Function to validate file delimiter
+
+def pipe_delimit(csvfile, col_size):
+	validate_status = True
+	for line in csvfile:
+		if(len(line.split("|")) != col_size):
+			validate_status = False
 			print("Validation #7 failed")
-			break
+			return validate_status
+	return validate_status
+
+# Function to validate data entry
+
+def data_validation(csvfile):
+	validate_status = True
+	for line in csvfile:
 		for field in line.split("|"):
 			if(field != "" and "str" == type(field)):
 				if(field.strip() == ""):
-					validateStatus = False
+					validate_status = False
 					print("Validation #8 failed")
-					break
+					return validate_status
 				if(field.trim() != field):
-					validateStatus = False
+					validate_status = False
 					print("Validation #9 failed")
-					break
-	return validateStatus
+					return validate_status
+	return validate_status
+
+
+# Master function for file validation
+
+def validate_file(file_name):
+	validate_status = True
+	open_file = open(path+file_name,'r').readlines()
+	print("File is Opened")
+	if(len(open_file) > 0):
+		no_of_header_cols = len(open_file[0].split("|"))
+
+		# Validating column headers
+
+		validate_status = validate_title_row(open_file[0])
+		if(not validate_status):
+			return validate_status
+
+		# Validate end of line (Carriage Return (CR) and Line Feed (LF))
+
+		validate_status = validate_crlf(open_file)
+		if(not validate_status):
+			return validate_status
+
+		# Validate pipe delimiter
+
+		validate_status = pipe_delimit(open_file, no_of_header_cols)
+		if(not validate_status):
+			return validate_status
+		
+		# Validate data entry
+
+		validate_status = data_validation(open_file, no_of_header_cols)
+		if(not validate_status):
+			return validate_status
+
+	else:
+		validate_status = False
+	return validate_status
 
 path = '/pfs/query/'
 for filename in os.listdir(path):
-	if validateEndLines(filename):
+	if validate_file(filename):
 		print(filename,":Success")
-
 		print("Copying file to Validate Success Container")
 		print(validate_success_container_name, filename, filename)
-
 		moveFileToAnotherContainer(container_name,validate_success_container_name,filename)
 
 	else:
 		print(filename,":Fail")
 		print("Copying file to Validate Failure Container")
 		print(validate_failure_container_name, filename, filename)
-
 		moveFileToAnotherContainer(container_name,validate_failure_container_name,filename)
