@@ -1,6 +1,7 @@
 import os, uuid, sys
 from azure.storage.blob import BlockBlobService, PublicAccess
 from dateutil.parser import parse
+import datetime
 
 # Mentioning the storage account name and key
 act_name = "crowedemostorage"
@@ -100,6 +101,32 @@ def data_validation(csvfile):
 					return validate_status
 	return validate_status
 
+# Validate date and time fields
+
+def date_and_time_validation(csvfile):
+	validate_status = True
+	for line in csvfile[1:]:
+		columns = line.split("|")
+		date_of_service = columns[2].strip()
+		validate_status = date_validate(date_of_service, "DATE_OF_SERVICE")
+		if(not validate_status):
+			validate_status = False
+			return validate_status
+		post_date = columns[3].strip()
+		validate_status = date_validate(post_date, "POST_DATE")
+		if(not validate_status):
+			validate_status = False
+			return validate_status
+	return validate_status
+
+def date_validate(value, column_name):
+	validate_status = True
+	try:
+		datetime.datetime.strptime(value, '%m/%d/%Y')
+	except ValueError:
+		validate_status = False
+		print("Validation #14 failed. Incorrect data format, should be MM/DD/YYYY, column", column_name)
+	return validate_status
 
 # Master function for file validation
 
@@ -130,10 +157,15 @@ def validate_file(file_name):
 		
 		# Validate data entry
 
-		validate_status = data_validation(open_file, no_of_header_cols)
+		validate_status = data_validation(open_file)
 		if(not validate_status):
 			return validate_status
 
+		# Validate date and time formats
+
+		validate_status = date_and_time_validation(open_file)
+		if(not validate_status):
+			return validate_status
 	else:
 		validate_status = False
 	return validate_status
