@@ -111,22 +111,22 @@ def date_and_time_validation(csvfile):
 		validate_status = date_validate(date_of_service, "DATE_OF_SERVICE")
 		if(not validate_status):
 			validate_status = False
-			return validation_status
+			return validate_status
 		post_date = columns[3].strip()
 		validate_status = date_validate(post_date, "POST_DATE")
 		if(not validate_status):
 			validate_status = False
-			return validation_status
+			return validate_status
 	return validate_status
 
 def date_validate(value, column_name):
-	validation_status = True
+	validate_status = True
 	try:
         datetime.datetime.strptime(value, '%m/%d/%Y')
     except ValueError:
-		validation_status = False
+		validate_status = False
 		print("Validation #14 failed. Incorrect data format, should be MM/DD/YYYY, column", column_name)
-	return validation_status
+	return validate_status
 
 # Master function for file validation
 
