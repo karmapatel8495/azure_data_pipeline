@@ -48,7 +48,7 @@ def validate_title_row(titlerow):
 			print(column,type(column))
 			return validate_status
 	for column_index in range(len(title_list)):
-		if(title_list[column_index] != columns_names[column_index]):
+		if(title_list[column_index].strip() != columns_names[column_index].strip()):
 			validate_status = False
 			print("Validation #5 failed")
 			print(column,type(column))
