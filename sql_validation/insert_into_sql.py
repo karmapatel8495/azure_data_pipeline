@@ -42,7 +42,13 @@ for counter in range(len(data_master_array)):
 #        day = current_data[3][:2]
 #        values.append(str(year) + "-" + str(month) + "-" + str(day) + " 00:00:00")
 #        values.append("(SELECT CONVERT(varchar" + str(current_data[3]) + "103))")
-        values.append("STR_TO_DATE('12-01-2014 00:00:00','%m-%d-%Y %H:%i:%s')")
+        value = '12-01-2014 00:00:00'
+
+        from datetime import datetime
+
+        value_date = datetime.strptime(value,'%m-%d-%Y %H:%M:%S')
+        #values.append("STR_TO_DATE('12-01-2014 00:00:00','%m-%d-%Y %H:%i:%s')")
+        values.append(value_date)
     else:
         values.append("0001-01-01 00:00:00")
     values.append(int(current_data[4]))
