@@ -1,4 +1,6 @@
 import pyodbc
+from datetime import datetime
+
 server = 'sql-demo-server.database.windows.net'
 database = 'sql-db'
 username = 'crowe'
@@ -28,6 +30,8 @@ cursor.execute(tem_sql)
 
 # Inserting new data
 
+valid_data = True
+
 for counter in range(len(data_master_array)):
     current_data = data_master_array[counter]
     fields_string = "(ChargeDataID, AccountID, FacilityID, PostingDate, HCPCSCode, ModifierComboCode, ProvidedRVUCode, PlaceOfServiceID, CarrierNumberCode, RevenueCodeID, PhysicianNPIComboCode, DaysUnits, ChargeAmount, TotalCharges)"
@@ -37,20 +41,15 @@ for counter in range(len(data_master_array)):
     values.append(counter + 1)
     values.append(counter + 1)
     if(current_data[3] is not None and current_data[3] != ""):
-#        year = current_data[3][6:]
-#        month = current_data[3][3:5]
-#        day = current_data[3][:2]
-#        values.append(str(year) + "-" + str(month) + "-" + str(day) + " 00:00:00")
-#        values.append("(SELECT CONVERT(varchar" + str(current_data[3]) + "103))")
-        value = '12-01-2014 00:00:00'
-
-        from datetime import datetime
-
-        value_date = datetime.strptime(value,'%m-%d-%Y %H:%M:%S')
-        #values.append("STR_TO_DATE('12-01-2014 00:00:00','%m-%d-%Y %H:%i:%s')")
-        values.append(value_date)
+        try:
+            value_date = datetime.strptime(current_data[3] + " 00:00:00",'%m/%d/%Y %H:%M:%S')
+            values.append(value_date)
+        except ValueError as ve:
+            valid_data = False
+            break
     else:
-        values.append("0001-01-01 00:00:00")
+        valid_data = False
+        break    
     values.append(int(current_data[4]))
     values.append(str(current_data[5]) + "," + str(current_data[6]) + "," + str(current_data[7]) + "," + str(current_data[8]))
     values.append(str(current_data[9]))
@@ -65,15 +64,9 @@ for counter in range(len(data_master_array)):
     print(sql_command)
     print(values)
     cursor.execute(sql_command,values)
-connection.commit()
-
-print("Record Inserted")
-
-# Check if inserted
-
-get_sql = ("SELECT * from dbo.factChargeData")
-cursor.execute(get_sql)
-for row in cursor.fetchall():
-    print(row)
-
+if(valid_data):
+    connection.commit()
+    print("Record Inserted")
+else:
+    print("Invalid data found, record insert failed")
 connection.close()
