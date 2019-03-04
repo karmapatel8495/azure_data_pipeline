@@ -66,7 +66,7 @@ for counter in range(len(data_master_array)):
     cursor.execute(sql_command,values)
 if(valid_data):
     connection.commit()
-    print("Record Inserted")
+    print("{} Records Inserted".format((counter+1)))
 else:
     print("Invalid data found, record insert failed")
 connection.close()
