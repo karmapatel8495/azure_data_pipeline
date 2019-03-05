@@ -21,8 +21,8 @@ cursor = connection.cursor()
 cursor.execute("SELECT @@version;")
 row = cursor.fetchone()
 while row:
-    print (row[0]) 
-    row = cursor.fetchone()
+	print (row[0]) 
+	row = cursor.fetchone()
 
 # Creating function to move file from one blob container to another
 
@@ -194,8 +194,8 @@ def load_data(file_name):
 	open_file = open(path+file_name,'r').readlines()
 	data_master_array = []
 	for line in open_file[1:]:
-    	current_line = line.strip()
-    	data_master_array.append(current_line.split("|"))
+		current_line = line.strip()
+		data_master_array.append(current_line.split("|"))
 	return(data_master_array)
 
 # Function to delete all records (Temporary soln)
@@ -207,50 +207,50 @@ def delall():
 # Function to insert a record
 
 def insert_record(current_data, counter):
-    isvalid = True
-    values = []
-    values.append(counter + 1)
-    values.append(counter + 1)
-    values.append(counter + 1)
-    if(current_data[3] is not None and current_data[3] != ""):
-        try:
-            value_date = datetime.strptime(current_data[3] + " 00:00:00",'%m/%d/%Y %H:%M:%S')
-            values.append(value_date)
-        except ValueError as ve:
-            isvalid = False
-            return(isvalid)
-    else:
-        isvalid = False
-        return(isvalid)
-    values.append(int(current_data[4]))
-    values.append(str(current_data[5]) + "," + str(current_data[6]) + "," + str(current_data[7]) + "," + str(current_data[8]))
-    values.append(str(current_data[9]))
-    values.append(str(current_data[10]))
-    values.append(str(current_data[11]))
-    values.append(str(current_data[13]))
-    values.append(str(current_data[14]) + "," + str(current_data[15]) + "," + str(current_data[16]) + "," + str(current_data[17]))
-    values.append(float(current_data[18]))
-    values.append(str(current_data[19]))
-    values.append(str(current_data[20]))
-    sql_command = "INSERT INTO dbo.factChargeData " + fields_string + " VALUES " +  value_placeholder_string
-    print(sql_command)
-    print(values)
-    cursor.execute(sql_command,values)
-    return(isvalid)
+	isvalid = True
+	values = []
+	values.append(counter + 1)
+	values.append(counter + 1)
+	values.append(counter + 1)
+	if(current_data[3] is not None and current_data[3] != ""):
+		try:
+			value_date = datetime.strptime(current_data[3] + " 00:00:00",'%m/%d/%Y %H:%M:%S')
+			values.append(value_date)
+		except ValueError as ve:
+			isvalid = False
+			return(isvalid)
+	else:
+		isvalid = False
+		return(isvalid)
+	values.append(int(current_data[4]))
+	values.append(str(current_data[5]) + "," + str(current_data[6]) + "," + str(current_data[7]) + "," + str(current_data[8]))
+	values.append(str(current_data[9]))
+	values.append(str(current_data[10]))
+	values.append(str(current_data[11]))
+	values.append(str(current_data[13]))
+	values.append(str(current_data[14]) + "," + str(current_data[15]) + "," + str(current_data[16]) + "," + str(current_data[17]))
+	values.append(float(current_data[18]))
+	values.append(str(current_data[19]))
+	values.append(str(current_data[20]))
+	sql_command = "INSERT INTO dbo.factChargeData " + fields_string + " VALUES " +  value_placeholder_string
+	print(sql_command)
+	print(values)
+	cursor.execute(sql_command,values)
+	return(isvalid)
 
 # Function to insert data from file
 
 total_count = len(data_master_array)
 
 def insert_file(data_master_array):
-    isvalid = True
-    for counter in range(len(data_master_array)):
-        current_data = data_master_array[counter]
-        if(isvalid):
-            isvalid = insert_record(current_data, counter)
-            if(not isvalid):
-                return(isvalid)
-    return(isvalid)
+	isvalid = True
+	for counter in range(len(data_master_array)):
+		current_data = data_master_array[counter]
+		if(isvalid):
+			isvalid = insert_record(current_data, counter)
+		if(not isvalid):
+			return(isvalid)
+	return(isvalid)
 
 path = '/pfs/query/'
 valid_data = True

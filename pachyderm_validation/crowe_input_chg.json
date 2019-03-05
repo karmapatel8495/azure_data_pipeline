@@ -3,7 +3,7 @@
     "name": "chg"
   },
   "transform": {
-    "image": "dockerrepodemo.azurecr.io/chg_validate_image:v10.05",
+    "image": "dockerrepodemo.azurecr.io/chg_validate_image:v10.07",
     "cmd": [ "python","chg_validate.py" ],
     "image_pull_secrets": ["acr-auth"]
   },

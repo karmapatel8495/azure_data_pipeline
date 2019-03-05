@@ -7,4 +7,4 @@ AKV_NAME=$ACR_NAME-vault # Azure Key Vault Name
 ###################################################
 
 cd pachyderm_validation/
-az acr build --registry $ACR_REGISTRY_NAME --image chg_validate_image:v10.05 .
+az acr build --registry $ACR_REGISTRY_NAME --image chg_validate_image:v10.07 .
