@@ -214,7 +214,7 @@ def insert_record(current_data, counter):
 	values.append(counter + 1)
 	if(current_data[3] is not None and current_data[3] != ""):
 		try:
-			value_date = datetime.strptime(current_data[3] + " 00:00:00",'%m/%d/%Y %H:%M:%S')
+			value_date = datetime.datetime.strptime(current_data[3] + " 00:00:00",'%m/%d/%Y %H:%M:%S')
 			values.append(value_date)
 		except ValueError as ve:
 			isvalid = False
@@ -222,7 +222,7 @@ def insert_record(current_data, counter):
 	else:
 		isvalid = False
 		return(isvalid)
-	values.append(int(current_data[4]))
+	values.append(str(current_data[4]))
 	values.append(str(current_data[5]) + "," + str(current_data[6]) + "," + str(current_data[7]) + "," + str(current_data[8]))
 	values.append(str(current_data[9]))
 	values.append(str(current_data[10]))
