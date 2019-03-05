@@ -240,8 +240,6 @@ def insert_record(current_data, counter):
 
 # Function to insert data from file
 
-total_count = len(data_master_array)
-
 def insert_file(data_master_array):
 	isvalid = True
 	for counter in range(len(data_master_array)):
@@ -262,7 +260,7 @@ for filename in os.listdir(path):
 		if(valid_data):
 			connection.commit()
 			print(filename,":Success")
-			print("{} Records Inserted".format((total_count)))
+			print("{} Records Inserted".format((len(data_master_array))))
 			print("Copying file to Validate Success Container")
 			print(validate_success_container_name, filename, filename)
 			moveFileToAnotherContainer(container_name,validate_success_container_name,filename)
